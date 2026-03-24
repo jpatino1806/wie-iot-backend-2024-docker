@@ -1,4 +1,4 @@
-name: iot-backend
+name: iot_wie-backend
 services:
   node:
     build: node
@@ -8,14 +8,14 @@ services:
       - ./../:/usr/app
     environment:
       - DB_HOST=mysql
-      - DB_USER=root
       - DB_PASSWORD=admin
-      - DB_NAME=iot
+      - DB_NAME=iot_wie
     depends_on:
       - mysql
     networks:
       - iot-network
-
+    command: npm run start
+    
   mysql:
     image: mysql:8.0
     restart: always
@@ -23,7 +23,7 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: admin
-      MYSQL_DATABASE: iot
+      MYSQL_DATABASE: iot_wie
     networks:
       - iot-network
     volumes:

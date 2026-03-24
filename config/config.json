@@ -2,7 +2,7 @@
 	"development": {
 	  "username": "root",
 	  "password": "admin",
-	  "database": "iot",
+	  "database": "iot_wie",
 	  "host": "mysql",
 	  "dialect": "mysql",
 	  "pool": {
