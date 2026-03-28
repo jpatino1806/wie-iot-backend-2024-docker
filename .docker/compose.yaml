@@ -4,6 +4,7 @@ services:
     build: node
     ports:
       - "88:88"
+      - "3000:3000"
     volumes:
       - ./../:/usr/app
     environment:
@@ -28,6 +29,27 @@ services:
       - iot-network
     volumes:
       - mysql-data:/var/lib/mysql
+
+  emqx:
+    image: emqx:5.8.4
+    container_name: emqx
+    environment:
+      - "EMQX_NODE_NAME=emqx@node1.emqx.io"
+      - "EMQX_CLUSTER__DISCOVERY_STRATEGY=static"
+      - "EMQX_CLUSTER__STATIC__SEEDS=[emqx@node1.emqx.io,emqx@node2.emqx.io]"
+    healthcheck:
+      test: ["CMD", "/opt/emqx/bin/emqx", "ctl", "status"]
+      interval: 5s
+      timeout: 25s
+      retries: 5
+    networks:
+      - iot-network
+    ports:
+      - 1883:1883
+      - 8083:8083
+      - 8084:8084
+      - 8883:8883
+      - 18083:18083
 
 networks:
   iot-network:
